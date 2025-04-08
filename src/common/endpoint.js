@@ -1,0 +1,23 @@
+export class Endpoint {
+  static baseurl = process.env.VUE_APP_BASE_URL;
+  static check_phone = `${this.baseurl}/contact/check/phone?mobile=`;
+  static commonapi = "/connector/api/";
+  static getInfoCustomer = `${this.baseurl}${this.commonapi}Info/customer`;
+  static getBrands = `${this.baseurl}${this.commonapi}brands`;
+  static getModels = `${this.baseurl}${this.commonapi}models/`;
+  static addcar = `${this.baseurl}${this.commonapi}add/car`;
+  static branches = `${this.baseurl}${this.commonapi}Branshes`;
+  static infoCar = `${this.baseurl}${this.commonapi}Info/car`;
+  static services = `${this.baseurl}${this.commonapi}services`;
+  static joborder = `${this.baseurl}${this.commonapi}customer/joborder`;
+  static notification = `${this.baseurl}${this.commonapi}customer/booking`;
+  static status = `${this.baseurl}${this.commonapi}status`;
+  static productName = `${this.baseurl}${this.commonapi}productName/`;
+  static saveProduct = `${this.baseurl}${this.commonapi}saveProduct`;
+  static datajoborder = `${this.baseurl}${this.commonapi}customer/data/joborder/`;
+  static lookupChassis = `${this.baseurl}${this.commonapi}bookings/lookup-chassis`;
+  static login = `${this.baseurl}/contact/login`;
+  static logo = `${this.baseurl}/contact/upload-image`;
+  static addBooking = `${this.baseurl}${this.commonapi}add/booking`;
+  static register = `${this.baseurl}/register`;
+}
