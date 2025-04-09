@@ -3,7 +3,7 @@
     <!-- <font-awesome-icon icon="coffee" /> -->
     <!-- Success Message -->
     <div v-if="bookingSuccess" class="booking-success-message">
-      Booking Sent and it is waiting.
+      Booking Sent and it is request.
     </div>
 
     <!-- Greeting -->
@@ -54,7 +54,7 @@
           :key="service.id"
           class="service-btn"
           :class="{ selected: selectedService === service.id }"
-          @click="selectService(service.id)"
+          @click="selectService(service.id, service.name)"
         >
           {{ service.name }}
         </button>
@@ -107,6 +107,7 @@ export default {
     return {
       car: {
         branch: "",
+        branchName: "",
       },
       currentCarIndex: "",
       model: "",
@@ -119,8 +120,10 @@ export default {
       services: [],
       info: [],
       selectedService: null,
+      selectedServiceName: null,
       branchs: [],
       token: "",
+      plate_number: "",
       problemDescription: "",
       bookingSuccess: false, // Add this line to manage success state
     };
@@ -160,6 +163,7 @@ export default {
         const car = this.cars[this.currentCarIndex];
         this.brand = car.device;
         this.model = car.model;
+        this.plate_number = car.plate_number;
       }
     },
     moveToNextCar() {
@@ -233,38 +237,35 @@ export default {
         console.error("Error fetching services:", error);
       }
     },
-    selectService(serviceId) {
+    selectService(serviceId, serviceName) {
       this.selectedService = serviceId;
+      this.selectedServiceName = serviceName;
     },
     onBranchChange() {
+      const selectedBranch = this.branchs.find(
+        (branch) => branch.id === this.car.branch
+      );
+      this.car.branchName = selectedBranch.name;
       console.log("Selected branch:", this.car.branch);
+      console.log("Selected branch name:", this.car.branchName);
     },
     async submitBooking() {
       try {
         // Use the full ISO string (date and time) from startDateTime
         const fullDateTime = this.startDateTime; // e.g., "2025-03-25T14:30"
-        const apiUrl = `${Endpoint.addBooking}`;
 
-        const response = await axios.post(apiUrl, null, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          params: {
-            booking_start: fullDateTime,
-            location_id: this.car.branch,
-            booking_note: this.problemDescription,
-            service_id: this.selectedService,
-            device_id: this.carid,
-          },
-        });
+        localStorage.setItem("Brand", this.brand);
+        localStorage.setItem("Model", this.model);
+        localStorage.setItem("Location", this.car.branchName);
+        localStorage.setItem("Service", this.selectedServiceName);
+        localStorage.setItem("Date", fullDateTime);
+        localStorage.setItem("Note", this.problemDescription);
+        localStorage.setItem("plate_number", this.plate_number);
+        localStorage.setItem("location_id", this.car.branch);
+        localStorage.setItem("device_id", this.carid);
+        localStorage.setItem("service_id", this.selectedService);
 
-        const data = response.data;
-        console.log("Booking response:", data);
-
-        // Set booking success state to true
-        this.bookingSuccess = true;
+        this.$router.push("/details/booking");
 
         // Reset form
         this.car.branch = "";

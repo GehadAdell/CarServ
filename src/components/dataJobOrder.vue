@@ -1,10 +1,10 @@
 <template>
-  <div class="booking-container-selectcar">
+  <div class="jobsheet-container-info">
     <h2 style="margin-bottom: 10px">job sheet info</h2>
     <div>
       <div v-if="datajoborders.length > 0" class="joborder_info_div">
         <div v-for="joborder in datajoborders" :key="joborder.id">
-          <div class="info-container">
+          <div class="info-container-jobsheet">
             <div class="info">
               <p class="jobsheet" style="width: 500px">
                 <span class="car-device">name: {{ name }}</span>
@@ -14,17 +14,23 @@
                 <span class="car-device">service: {{ joborder.service }}</span>
               </p>
             </div>
-            <div class="plate">
-              <div class="top">
-                <div class="left">EGYPT</div>
-                <div class="right">مصر</div>
+            <div class="plate_jobsheet">
+              <div class="top_jobsheet">
+                <div class="left_jobsheet">EGYPT</div>
+                <div class="right_jobsheet">مصر</div>
               </div>
-              <div class="bottom">
-                <div class="numbers" style="font-family: 'Cairo', sans-serif">
+              <div class="bottom_jobsheet">
+                <div
+                  class="numbers_jobsheet"
+                  style="font-family: 'Cairo', sans-serif"
+                >
                   <div>{{ getParts(joborder.plate_number)[0] }}</div>
                 </div>
-                <div class="separator"></div>
-                <div class="letters" style="font-family: 'Cairo', sans-serif">
+                <div class="separator_jobsheet"></div>
+                <div
+                  class="letters_jobsheet"
+                  style="font-family: 'Cairo', sans-serif"
+                >
                   <div>{{ getParts(joborder.plate_number)[1] }}</div>
                 </div>
               </div>
@@ -39,7 +45,7 @@
       <div class="progress-container">
         <div v-if="statuses.length > 0">
           <div v-for="status in statuses" :key="status.id">
-            <span class="car-device">{{ status.name }}</span>
+            <span class="progress-step">{{ status.name }}</span>
             <div :class="status_id === status.id ? 'step completed' : 'step'">
               <span class="icon">
                 <font-awesome-icon
@@ -98,12 +104,8 @@
         </tbody>
       </table>
 
-      <div class="button-container">
-        <button
-          @click="saveProduct"
-          :disabled="isLoading"
-          class="bg-black text-white px-6 py-4 rounded-xl font-bold shadow-md w-full max-w-[17.5rem]"
-        >
+      <div class="button-container-accept">
+        <button @click="saveProduct" :disabled="isLoading" class="accept">
           {{ isLoading ? "جاري الحفظ..." : "الموافقه" }}
         </button>
       </div>
@@ -392,6 +394,7 @@ export default {
   mounted() {
     this.fetchdatajoborder();
     this.status();
+    this.startCountdown();
   },
   beforeDestroy() {
     clearInterval(this.countdownInterval);

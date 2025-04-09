@@ -106,7 +106,7 @@ export default {
   mounted() {
     this.logoupload();
     this.phoneNumber = localStorage.getItem("phoneNumber") || "Number not set";
-    this.startTimer();
+    localStorage.removeItem("authToken");
   },
 };
 </script>

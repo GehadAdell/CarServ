@@ -11,6 +11,7 @@ import Booking from "../components/Booking.vue";
 import Joborder from "../components/joborderInfo.vue";
 import notification from "../components/notificationInfo.vue";
 import dataJoborder from "../components/dataJobOrder.vue";
+import detailsbooking from "../components/detailsbooking.vue";
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,11 @@ const routes = [
   {
     path: "/booking",
     component: Booking,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/details/booking",
+    component: detailsbooking,
     meta: { requiresAuth: true },
   },
   {

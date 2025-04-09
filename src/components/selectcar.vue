@@ -110,6 +110,7 @@ export default {
         localStorage.setItem("selectedCarId", selectedCar.id);
         localStorage.setItem("selectedCarModel", selectedCar.model);
         localStorage.setItem("selectedCarDevice", selectedCar.device);
+        localStorage.setItem("plate_number", selectedCar.plate_number);
 
         // Redirect to /booking route
         this.$router.push("/booking");
