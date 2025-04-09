@@ -3,18 +3,17 @@
   <div id="app">
     <nav>
       <Logout />
-      <!-- Make sure this is present where you want it -->
       <router-view />
     </nav>
   </div>
 </template>
 
 <script>
-import Logout from "./components/logout.vue"; // Check the path is correct
+import Logout from "./components/logout.vue";
 
 export default {
   components: {
-    Logout, // Register the component
+    Logout,
   },
 };
 </script>
