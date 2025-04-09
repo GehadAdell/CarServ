@@ -1,8 +1,23 @@
+<!-- App.vue -->
 <template>
   <div id="app">
-    <router-view />
+    <nav>
+      <Logout />
+      <!-- Make sure this is present where you want it -->
+      <router-view />
+    </nav>
   </div>
 </template>
+
+<script>
+import Logout from "./components/logout.vue"; // Check the path is correct
+
+export default {
+  components: {
+    Logout, // Register the component
+  },
+};
+</script>
 
 <style>
 #app {
@@ -20,6 +35,8 @@ nav {
 nav a {
   font-weight: bold;
   color: #2c3e50;
+  text-align: right;
+  font-size: 20px;
 }
 
 nav a.router-link-exact-active {

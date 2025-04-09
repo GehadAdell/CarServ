@@ -9,7 +9,7 @@
           @click="dataOfJobInfo(joborder.id)"
           class="joborder_info { selected: selectedJobOrder === joborder.id }"
         >
-          <div class="plate">
+          <div class="plate" style="margin-left: 0px">
             <div class="top">
               <div class="left">EGYPT</div>
               <div class="right">مصر</div>

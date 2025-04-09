@@ -94,6 +94,7 @@ export default {
   },
   mounted() {
     this.logoupload();
+    localStorage.removeItem("authToken");
   },
 };
 </script>

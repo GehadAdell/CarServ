@@ -37,6 +37,7 @@
 import axios from "axios";
 import { Endpoint } from "../common/endpoint.js";
 import { Image } from "../common/image.js";
+import { EventBus } from "../eventBus";
 
 export default {
   name: "LoginPage",
@@ -108,6 +109,7 @@ export default {
         if (data.token) {
           // Store the token (e.g., in localStorage or Vuex store for later use)
           localStorage.setItem("authToken", data.token);
+          EventBus.$emit("auth-changed");
 
           // Navigate to the "AddCar" page after successful login
           this.$router.push("/choose-car");
@@ -124,6 +126,7 @@ export default {
   mounted() {
     this.logoupload();
     this.name = localStorage.getItem("name") || "";
+    localStorage.removeItem("authToken");
   },
 };
 </script>
