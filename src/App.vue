@@ -15,6 +15,17 @@ export default {
   components: {
     Logout,
   },
+  computed: {
+    showLogout() {
+      const hiddenRoutes = ["/login", "/register", "/user/register", "/"];
+      return !hiddenRoutes.includes(this.$route.path);
+    },
+  },
+  watch: {
+    $route() {
+      // Needed to react to route changes
+    },
+  },
 };
 </script>
 
