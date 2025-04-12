@@ -13,7 +13,7 @@
     <div class="phone-container">
       <input
         type="text"
-        placeholder="Please enter your phone number"
+        :placeholder="$t('placecheck')"
         v-model="phoneNumber"
         class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-6 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black"
       />
@@ -23,9 +23,10 @@
     <div class="button-container">
       <button
         @click="goToNextPage"
+        style="margin-left: -30px"
         class="bg-black text-white px-6 py-4 rounded-xl font-bold shadow-md w-full max-w-[17.5rem]"
       >
-        Check
+        {{ $t("checkbutton") }}
       </button>
     </div>
   </div>

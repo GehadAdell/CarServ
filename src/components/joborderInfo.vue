@@ -1,6 +1,6 @@
 <template>
   <div class="booking-container-selectcar">
-    <h2 style="margin-bottom: 10px">Your Job Sheet</h2>
+    <h2 style="margin-bottom: 10px">{{ $t("jobinfo") }}</h2>
     <div>
       <div v-if="joborders.length > 0" class="joborder_info_div">
         <a
@@ -25,10 +25,10 @@
             </div>
           </div>
           <span class="car-device"
-            >Job_sheet_no: {{ joborder.job_sheet_no }}</span
+            >{{ $t("jobsheetno") }}: {{ joborder.job_sheet_no }}</span
           >
           <span class="car-device"
-            >Location: {{ joborder.location }}
+            >{{ $t("location") }}: {{ joborder.location }}
             <hr
           /></span>
         </a>

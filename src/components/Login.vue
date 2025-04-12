@@ -9,13 +9,13 @@
       </div>
     </div>
 
-    <p>Hello, {{ name }} please complete login</p>
+    <p>{{ $t("infolog", { name: name }) }}</p>
 
     <!-- Password Input -->
     <div class="password-container">
       <input
         type="password"
-        placeholder="Enter password"
+        :placeholder="$t('enterpass')"
         v-model="password"
         class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-6 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black"
       />
@@ -25,9 +25,10 @@
     <div class="button-container">
       <button
         @click="login"
+        style="margin-left: -30px"
         class="bg-black text-white px-6 py-4 rounded-xl font-bold shadow-md w-full max-w-[17.5rem]"
       >
-        Login
+        {{ $t("loginbtn") }}
       </button>
     </div>
   </div>

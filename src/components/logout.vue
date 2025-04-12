@@ -1,13 +1,22 @@
 <!-- components/logout.vue -->
 <template>
-  <a v-if="isAuthenticated" @click="handleLogout" class="logout-btn">Logout</a>
+  <a v-if="isAuthenticated" @click="handleLogout" class="logout-btn"
+    ><font-awesome-icon :icon="['fas', 'arrow-right-to-bracket']"
+  /></a>
 </template>
 
 <script>
 import { EventBus } from "../eventBus"; // Adjust path
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+library.add(fas);
 
 export default {
   name: "UserLogout",
+  components: {
+    FontAwesomeIcon,
+  },
   data() {
     return {
       authToken: localStorage.getItem("authToken"),

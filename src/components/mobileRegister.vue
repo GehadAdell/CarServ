@@ -7,7 +7,7 @@
 
     <!-- SMS Code Section -->
     <div class="sms-section">
-      <p>Hello please complete Register</p>
+      <p>{{ $t("mobilereg") }}</p>
     </div>
 
     <!-- Form Section -->
@@ -16,10 +16,10 @@
         <input
           :type="showPassword ? 'text' : 'password'"
           v-model="password"
-          placeholder="Enter password"
+          :placeholder="$t('enterpass')"
         />
       </div>
-      <button class="enter-btn" @click="submitForm">Enter</button>
+      <button class="enter-btn" @click="submitForm">{{ $t("regbtn") }}</button>
     </div>
   </div>
 </template>

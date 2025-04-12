@@ -1,6 +1,6 @@
 <template>
   <div class="booking-container-selectcar">
-    <h2 style="margin-bottom: 10px">Choose Car to Add Booking</h2>
+    <h2 style="margin-bottom: 10px">{{ $t("choosecar") }}</h2>
     <div class="service-buttons-container">
       <div v-if="cars.length > 0" class="service-buttons-select-car">
         <button
@@ -10,9 +10,9 @@
           :class="{ selected: selectedService === car.id }"
           @click="selectService(car.id)"
         >
-          <span class="car-device">Brand: {{ car.device }}</span>
-          <span class="car-model">Model: {{ car.model }}</span>
-          <span class="car-color">Color: {{ car.color }}</span>
+          <span class="car-device">{{ $t("brand") }}: {{ car.device }}</span>
+          <span class="car-model">{{ $t("model") }}: {{ car.model }}</span>
+          <span class="car-color"> {{ car.color }} :{{ $t("color") }}</span>
           <div class="plate">
             <div class="top">
               <div class="left">EGYPT</div>
@@ -30,23 +30,12 @@
           </div>
           <!-- <span class="plate_number">Plate Number: {{ car.plate_number }}</span> -->
         </button>
-        <button class="addcarbtn" @click="addcar">Add Car</button>
+        <button class="addcarbtn" @click="addcar">{{ $t("addcarbtn") }}</button>
       </div>
       <div v-else class="service-buttons-select-car">
-        <button class="addcarbtn" @click="addcar">Add Car</button>
+        <button class="addcarbtn" @click="addcar">{{ $t("addcarbtn") }}</button>
       </div>
     </div>
-
-    <!-- <button
-      class="submit-btn"
-      @click="submitBooking"
-      :disabled="!selectedService"
-    >
-      Confirm
-    </button>
-    <button class="submit-btn" style="margin-top: 5px" @click="addcar">
-      Add Car
-    </button> -->
   </div>
 </template>
 
@@ -106,13 +95,10 @@ export default {
         (car) => car.id === this.selectedService
       );
       if (selectedCar) {
-        // Store car ID and model in localStorage
         localStorage.setItem("selectedCarId", selectedCar.id);
         localStorage.setItem("selectedCarModel", selectedCar.model);
         localStorage.setItem("selectedCarDevice", selectedCar.device);
         localStorage.setItem("plate_number", selectedCar.plate_number);
-
-        // Redirect to /booking route
         this.$router.push("/booking");
       }
     },

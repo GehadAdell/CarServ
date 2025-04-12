@@ -6,14 +6,14 @@
     <div class="form-container">
       <!-- Title -->
       <h1 class="text-2xl font-bold mb-8 text-gray-800 uppercase">
-        Add Your Car
+        {{ $t("carinfo") }}
       </h1>
 
       <!-- VIN Number Input with Button -->
       <div class="w-full max-w-[17.5rem] mb-4 relative">
         <input
           type="text"
-          placeholder="VIN Number"
+          :placeholder="$t('vinnumber')"
           v-model="car.vin"
           class="border border-gray-300 rounded-lg px-4 py-3 w-full text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-500"
           maxlength="17"
@@ -21,8 +21,9 @@
         <a
           href="#"
           @click.prevent="showVinModal = true"
+          style="font-size: 13px"
           class="text-xs text-gray-500 underline"
-          >Where can I find the VIN number?</a
+          >{{ $t("wherevin") }}</a
         >
       </div>
 
@@ -33,7 +34,7 @@
           @change="fetchModels"
           class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-4 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-500"
         >
-          <option value="" disabled selected>Brand</option>
+          <option value="" disabled selected>{{ $t("brand") }}</option>
           <option v-for="brand in brands" :key="brand.id" :value="brand.id">
             {{ brand.name }}
           </option>
@@ -46,7 +47,7 @@
           class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-4 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-500"
           :disabled="!car.brand"
         >
-          <option value="" disabled selected>Model</option>
+          <option value="" disabled selected>{{ $t("model") }}</option>
           <option v-for="model in models" :key="model.id" :value="model.id">
             {{ model.name }}
           </option>
@@ -58,7 +59,7 @@
           v-model="car.years"
           class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-4 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-500"
         >
-          <option value="" disabled selected>Years</option>
+          <option value="" disabled selected>{{ $t("years") }}</option>
           <option v-for="year in yearsList" :key="year" :value="year">
             {{ year }}
           </option>
@@ -67,14 +68,14 @@
 
       <input
         type="text"
-        placeholder="Color"
+        :placeholder="$t('color')"
         v-model="car.color"
         class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-4 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-500"
       />
 
       <input
         type="text"
-        placeholder="Platnumber"
+        :placeholder="$t('platenumber')"
         v-model="car.platnumber"
         class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-6 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-500"
       />
@@ -84,7 +85,7 @@
           v-model="car.car_type"
           class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-4 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-500"
         >
-          <option value="" disabled selected>Car Type</option>
+          <option value="" disabled selected>{{ $t("cartype") }}</option>
           <option value="ملاكي">ملاكي</option>
           <option value="أجرة">أجرة</option>
           <option value="نقل ثقيل">نقل ثقيل</option>
@@ -96,7 +97,7 @@
         @click="addCar"
         class="add-button bg-green-600 text-white px-6 py-4 rounded-xl font-bold shadow-md w-full max-w-[17.5rem] uppercase"
       >
-        Add
+        {{ $t("addcarbtn") }}
       </button>
     </div>
 

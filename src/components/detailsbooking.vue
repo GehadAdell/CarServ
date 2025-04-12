@@ -3,56 +3,56 @@
     <div class="form-card">
       <!-- Success Message -->
       <div v-if="bookingSuccess" class="booking-success-message">
-        Booking Sent and it is request.
+        {{ $t("confirmbooking") }}
       </div>
       <!-- Header -->
       <div class="form-header">
-        <h2>Booking Details</h2>
+        <h2>{{ $t("bookingdetails") }}</h2>
       </div>
       <!-- Form Body -->
       <div class="form-body">
         <div class="form-row">
-          <span class="label">Date:</span>
+          <span class="label">{{ $t("date") }}:</span>
           <span>{{ date }}</span>
         </div>
         <div class="form-row">
-          <span class="label">Service:</span>
+          <span class="label">{{ $t("service") }}:</span>
           <span>{{ service }}</span>
         </div>
         <div class="form-row">
-          <span class="label">Brand:</span>
+          <span class="label">{{ $t("brand") }}:</span>
           <span>{{ brand }}</span>
         </div>
         <div class="form-row">
-          <span class="label">Model:</span>
+          <span class="label">{{ $t("model") }}:</span>
           <span>{{ model }}</span>
         </div>
         <div class="form-row">
-          <span class="label">Plate Number:</span>
+          <span class="label">{{ $t("platenumber") }}:</span>
           <span>{{ plate_number }}</span>
         </div>
         <div class="form-row">
-          <span class="label">Location:</span>
+          <span class="label">{{ $t("location") }}:</span>
           <span>{{ location }}</span>
         </div>
         <div class="form-row">
-          <span class="label">Note:</span>
+          <span class="label">{{ $t("note") }}:</span>
           <span>{{ note }}</span>
         </div>
         <hr />
         <div class="form-row">
-          <span class="label">Your Name:</span>
+          <span class="label">{{ $t("name") }}:</span>
           <span>{{ name }}</span>
         </div>
         <div class="form-row">
-          <span class="label">Phone Number:</span>
+          <span class="label">{{ $t("phone") }}:</span>
           <span>{{ phone }}</span>
         </div>
       </div>
       <!-- Footer with Button -->
       <div class="form-footer">
         <button @click="handleFinish" :disabled="isButtonDisabled">
-          FINISH
+          {{ $t("finish") }}
         </button>
       </div>
     </div>

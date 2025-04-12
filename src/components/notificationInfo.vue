@@ -1,15 +1,15 @@
 <template>
   <div class="booking-container-selectcar">
-    <h2 style="margin-bottom: 10px">Booking Info</h2>
+    <h2 style="margin-bottom: 10px">{{ $t("bookingifonot") }}</h2>
     <div>
       <div v-if="bookings.length > 0" class="joborder_info_div">
         <p v-for="booking in bookings" :key="booking.id" class="joborder_info">
           <span class="car-device" v-if="booking.job_sheet_no">
-            job_sheet_no: {{ booking.job_sheet_no }}
+            {{ $t("jobsheetno") }}: {{ booking.job_sheet_no }}
           </span>
 
           <span class="car-device">
-            Booking Status: {{ booking.booking_status }}
+            {{ $t("Bookingstatus") }}: {{ booking.booking_status }}
             <hr />
           </span>
         </p>

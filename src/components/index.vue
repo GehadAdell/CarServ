@@ -12,7 +12,7 @@
 
     <!-- Tagline -->
     <p class="text-custom-brown font-bold text-xl mb-8 text-center">
-      Maintenance reservation & reminders
+      {{ $t("welcomeindex") }}
     </p>
 
     <!-- Slider Dots -->
@@ -32,8 +32,12 @@
         @click="goToNextPage"
         class="bg-black text-white px-6 py-4 rounded-xl font-bold shadow-md w-full max-w-[17.5rem]"
       >
-        Sign In/Create account
+        {{ $t("buttonindex") }}
       </button>
+    </div>
+
+    <div class="button-container">
+      <button @click="switchLang">{{ $t("switchlang") }}</button>
     </div>
   </div>
 </template>
@@ -52,6 +56,11 @@ export default {
     };
   },
   methods: {
+    switchLang() {
+      const newLocale = this.$i18n.locale === "en" ? "ar" : "en";
+      this.$i18n.locale = newLocale;
+      localStorage.setItem("locale", newLocale);
+    },
     async logoupload() {
       try {
         // Use POST request to fetch the logo
@@ -94,7 +103,6 @@ export default {
   },
   mounted() {
     this.logoupload();
-    localStorage.removeItem("authToken");
   },
 };
 </script>

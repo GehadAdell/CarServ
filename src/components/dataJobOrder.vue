@@ -1,17 +1,25 @@
 <template>
   <div class="jobsheet-container-info">
-    <h2 style="margin-bottom: 10px">job sheet info</h2>
+    <h2>{{ $t("inforequest") }}</h2>
     <div>
       <div v-if="datajoborders.length > 0" class="joborder_info_div">
         <div v-for="joborder in datajoborders" :key="joborder.id">
           <div class="info-container-jobsheet">
             <div class="info">
-              <p class="jobsheet" style="width: 500px">
-                <span class="car-device">name: {{ name }}</span>
-                <span class="car-device">model: {{ joborder.model }}</span>
-                <span class="car-device">brand: {{ joborder.brand }}</span>
-                <span class="car-device">color: {{ joborder.color }}</span>
-                <span class="car-device">service: {{ joborder.service }}</span>
+              <p class="jobsheet">
+                <span class="car-device">{{ $t("name") }}: {{ name }}</span>
+                <span class="car-device"
+                  >{{ $t("brand") }}: {{ joborder.brand }}</span
+                >
+                <span class="car-device"
+                  >{{ $t("model") }}: {{ joborder.model }}</span
+                >
+                <span class="car-device"
+                  >{{ $t("color") }}: {{ joborder.color }}</span
+                >
+                <span class="car-device"
+                  >{{ $t("service") }}: {{ joborder.service }}</span
+                >
               </p>
             </div>
             <div class="plate_jobsheet">
@@ -40,12 +48,11 @@
         </div>
       </div>
       <div v-else>
-        <p>No job orders available.</p>
+        <p>لا يوجد اوردارات.</p>
       </div>
       <div class="progress-container">
         <div v-if="statuses.length > 0">
-          <div v-for="status in statuses" :key="status.id">
-            <span class="progress-step">{{ status.name }}</span>
+          <div class="info-status" v-for="status in statuses" :key="status.id">
             <div :class="status_id === status.id ? 'step completed' : 'step'">
               <span class="icon">
                 <font-awesome-icon
@@ -57,6 +64,7 @@
                 />
               </span>
             </div>
+            <span class="progress-step">{{ status.name }}</span>
           </div>
         </div>
         <div v-else class="no-cars">
@@ -65,78 +73,76 @@
       </div>
       <hr />
       <div class="title-job">
-        <h3>طلب موافقه العميل علي قطع الغيار</h3>
+        <h3>{{ $t("acceptorder") }}</h3>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>اسم القطعة</th>
-            <th>السعر</th>
-            <th>الكمية</th>
-            <th>اختيار</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-if="dataproducts.length > 0">
-            <tr v-for="product in dataproducts" :key="product.id">
-              <td>{{ product.name }}</td>
-              <td class="price">{{ product.price }}</td>
-              <td class="quantity">{{ product.quantity }}</td>
-              <td>
-                <input
-                  type="checkbox"
-                  class="part-checkbox"
-                  :name="`product_ids[${product.product_id}]`"
-                  id="approval_status"
-                  value="1"
-                  :checked="product.client_approval == 1"
-                  :disabled="product.client_approval == 1"
-                  @change="updateHiddenInput(product.id, $event)"
-                />
-              </td>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ $t("namepart") }}</th>
+              <th>{{ $t("price") }}</th>
+              <th>{{ $t("quantity") }}</th>
+              <th>{{ $t("approve") }}</th>
             </tr>
-          </template>
-          <tr v-else>
-            <td colspan="4" style="text-align: center">
-              No products available.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>
+            <template v-if="dataproducts.length > 0">
+              <tr v-for="product in dataproducts" :key="product.id">
+                <td>{{ product.name }}</td>
+                <td class="price">{{ product.price }}</td>
+                <td class="quantity">{{ product.quantity }}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="part-checkbox"
+                    :name="`product_ids[${product.product_id}]`"
+                    id="approval_status"
+                    value="1"
+                    :checked="product.client_approval == 1"
+                    :disabled="product.client_approval == 1"
+                    @change="updateHiddenInput(product.id, $event)"
+                  />
+                </td>
+              </tr>
+            </template>
+            <tr v-else>
+              <td colspan="4" style="text-align: center">لا يوجد منتجات.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div class="button-container-accept">
         <button @click="saveProduct" :disabled="isLoading" class="accept">
-          {{ isLoading ? "جاري الحفظ..." : "الموافقه" }}
+          {{ $t("acceptbtn") }}
         </button>
       </div>
       <hr />
-
       <div class="total">
-        العدد الكلي: <span>{{ totalCount }}</span>
+        {{ $t("totalamount") }}: <span>{{ totalCount }}</span>
         <div>
-          السعر الكلي: <span>{{ totalPrice }}</span> EGP
+          {{ $t("totalprice") }}: <span>{{ totalPrice }}</span> EGP
         </div>
       </div>
       <hr />
       <div class="title-job">
-        <h3 id="finish">وقت انتهاء العمل</h3>
+        <h3 id="finish">{{ $t("timeend") }}</h3>
       </div>
       <div class="countdown-container">
         <div class="countdown-box">
           <span id="days">00</span>
-          يوم
+          {{ $t("day") }}
         </div>
         <div class="countdown-box">
           <span id="hours">00</span>
-          ساعة
+          {{ $t("hour") }}
         </div>
         <div class="countdown-box">
           <span id="minutes">00</span>
-          دقيقة
+          {{ $t("minute") }}
         </div>
         <div class="countdown-box">
           <span id="seconds">00</span>
-          ثانية
+          {{ $t("second") }}
         </div>
       </div>
     </div>
@@ -356,7 +362,7 @@ export default {
           this.minutes === 0 &&
           this.seconds === 0
         ) {
-          document.getElementById("finish").innerText = "تم انتهاء العمل";
+          document.getElementById("finish").innerText = this.$t("timeended");
           clearInterval(this.countdownInterval);
           return;
         }

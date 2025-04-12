@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <!-- Logo Section -->
-    <div class="mb-12">
-      <img :src="logo" alt="Car Service Logo" class="h-24" />
+    <!-- Logo Section (not visible in the image, but keeping for completeness) -->
+    <div class="logo-section">
+      <img :src="logo" alt="Car Service Logo" class="logo-img" />
     </div>
 
     <!-- SMS Code Section -->
     <div class="sms-section">
-      <h3 style="text-align: center; margin-top: -90px">Enter Code</h3>
-      <p>
-        We sent SMS with an activation code to your phone
+      <h3 class="section-title">{{ $t("entercode") }}</h3>
+      <p class="sms-info">
+        {{ $t("datareg") }}
         <strong>{{ phoneNumber }}</strong>
       </p>
       <div class="code-inputs">
@@ -18,6 +18,7 @@
           :key="index"
           v-model="code[index]"
           maxlength="1"
+          class="code-digit"
           @input="moveToNext(index, $event)"
         />
       </div>
@@ -25,15 +26,21 @@
 
     <!-- Form Section -->
     <div class="form-section">
-      <input type="text" v-model="fullName" placeholder="Full name" />
+      <input
+        type="text"
+        v-model="fullName"
+        :placeholder="$t('fullname')"
+        class="form-input"
+      />
       <div class="password-wrapper">
         <input
           :type="showPassword ? 'text' : 'password'"
           v-model="password"
-          placeholder="Enter password"
+          :placeholder="$t('enterpass')"
+          class="form-input"
         />
       </div>
-      <button class="enter-btn" @click="submitForm">Enter</button>
+      <button class="enter-btn" @click="submitForm">{{ $t("regbtn") }}</button>
     </div>
   </div>
 </template>

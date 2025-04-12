@@ -10,7 +10,7 @@
     <header class="header">
       <div class="header-content">
         <div class="greeting-section">
-          <h2>HI, {{ name }}</h2>
+          <h2>{{ $t("welcome") }}, {{ name }}</h2>
           <a @click="moveToJoborder" style="font-size: 15px">
             <font-awesome-icon :icon="['fass', 'key']" class="joborder-icon" />
           </a>
@@ -22,7 +22,7 @@
           </a>
         </div>
         <div class="info-container">
-          <p class="datacar">Selected Car: {{ brand }} {{ model }}</p>
+          <p class="datacar">{{ $t("selectcar") }}: {{ brand }} {{ model }}</p>
           <a @click="moveToNextCar" style="font-size: 15px">
             <font-awesome-icon :icon="['fas', 'right-left']" class="swap" />
           </a>
@@ -38,7 +38,7 @@
         class="border border-gray-300 rounded-lg px-4 py-3 w-full max-w-[17.5rem] mb-4 text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-500"
         @change="onBranchChange"
       >
-        <option value="" disabled selected>Select Branch</option>
+        <option value="" disabled selected>{{ $t("branchselect") }}</option>
         <option v-for="branch in branchs" :key="branch.id" :value="branch.id">
           {{ branch.name }}
         </option>
@@ -46,7 +46,7 @@
     </div>
 
     <!-- Service Selection -->
-    <h3>Choose Service</h3>
+    <h3 style="text-align: left">{{ $t("servicechoose") }}</h3>
     <div class="service-buttons-container">
       <div class="service-buttons">
         <button
@@ -62,7 +62,7 @@
     </div>
 
     <!-- Date and Time Picker -->
-    <h3>Pick date and time</h3>
+    <h3 style="text-align: left">{{ $t("pickdate") }}</h3>
     <div class="form-group">
       <div class="date-inputs">
         <input
@@ -78,14 +78,14 @@
     <div class="form-group">
       <textarea
         v-model="problemDescription"
-        placeholder="Tell us what is your problem"
+        :placeholder="$t('notedes')"
         class="problem-input"
       ></textarea>
     </div>
 
     <!-- Submit Button -->
     <button class="submit-btn" @click="submitBooking">
-      Send Booking Request
+      {{ $t("bookingbtn") }}
     </button>
   </div>
 </template>
