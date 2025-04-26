@@ -11,7 +11,10 @@
     </div>
 
     <!-- Tagline -->
-    <p class="text-custom-brown font-bold text-xl mb-8 text-center">
+    <p
+      class="text-custom-brown font-bold text-xl mb-8 text-center"
+      style="text-align: center"
+    >
       {{ $t("welcomeindex") }}
     </p>
 

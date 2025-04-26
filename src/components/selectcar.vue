@@ -1,7 +1,12 @@
 <template>
   <div class="booking-container-selectcar">
     <h2 style="margin-bottom: 10px">{{ $t("choosecar") }}</h2>
-    <div class="service-buttons-container">
+    <!-- Loading Indicator -->
+    <div v-if="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>{{ $t("loading") }}</p>
+    </div>
+    <div v-else class="service-buttons-container">
       <div v-if="cars.length > 0" class="service-buttons-select-car">
         <button
           v-for="car in cars"
@@ -12,7 +17,7 @@
         >
           <span class="car-device">{{ $t("brand") }}: {{ car.device }}</span>
           <span class="car-model">{{ $t("model") }}: {{ car.model }}</span>
-          <span class="car-color"> {{ car.color }} :{{ $t("color") }}</span>
+          <span class="car-color">{{ $t("color") }}: {{ car.color }}</span>
           <div class="plate">
             <div class="top">
               <div class="left">EGYPT</div>
@@ -28,7 +33,6 @@
               </div>
             </div>
           </div>
-          <!-- <span class="plate_number">Plate Number: {{ car.plate_number }}</span> -->
         </button>
         <button class="addcarbtn" @click="addcar">{{ $t("addcarbtn") }}</button>
       </div>
@@ -50,6 +54,7 @@ export default {
       selectedService: null,
       cars: [],
       token: "",
+      isLoading: false, // Add loading state
     };
   },
   methods: {
@@ -61,6 +66,7 @@ export default {
     },
     async fetchCars() {
       try {
+        this.isLoading = true; // Set loading to true before fetching
         this.token = localStorage.getItem("authToken");
         if (!this.token) {
           throw new Error("Authentication required. Please log in.");
@@ -86,6 +92,8 @@ export default {
       } catch (error) {
         console.error("Error fetching cars:", error);
         this.$emit("error", error.message || "Failed to load cars");
+      } finally {
+        this.isLoading = false; // Reset loading state
       }
     },
     selectService(carId) {
@@ -114,4 +122,29 @@ export default {
 
 <style scoped>
 @import "../../public/css/style.css";
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>

@@ -1,6 +1,11 @@
 <template>
   <div class="booking-container-selectcar">
     <h2 style="margin-bottom: 10px">{{ $t("jobinfo") }}</h2>
+    <!-- Loading Indicator -->
+    <div v-if="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>{{ $t("loading") }}</p>
+    </div>
     <div>
       <div v-if="joborders.length > 0" class="joborder_info_div">
         <a
@@ -51,6 +56,7 @@ export default {
       joborders: [],
       selectedJobOrder: null,
       token: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -67,6 +73,7 @@ export default {
     },
     async fetchjoborder() {
       try {
+        this.isLoading = true;
         this.token = localStorage.getItem("authToken");
         if (!this.token) {
           throw new Error("Authentication required. Please log in.");
@@ -99,6 +106,8 @@ export default {
       } catch (error) {
         console.error("Error fetching job orders:", error);
         this.$emit("error", error.message || "Failed to load job orders");
+      } finally {
+        this.isLoading = false; // Reset loading state
       }
     },
   },

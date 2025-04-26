@@ -12,12 +12,16 @@ export class Endpoint {
   static joborder = `${this.baseurl}${this.commonapi}customer/joborder`;
   static notification = `${this.baseurl}${this.commonapi}customer/booking`;
   static status = `${this.baseurl}${this.commonapi}status`;
+  static statuswithoutauth = `${this.baseurl}/contact/status`;
   static productName = `${this.baseurl}${this.commonapi}productName/`;
+  static productNamewithoutauth = `${this.baseurl}/contact/productName/`;
   static saveProduct = `${this.baseurl}${this.commonapi}saveProduct`;
+  static saveProductwithoutauth = `${this.baseurl}/contact/saveProduct`;
   static datajoborder = `${this.baseurl}${this.commonapi}customer/data/joborder/`;
   static lookupChassis = `${this.baseurl}${this.commonapi}bookings/lookup-chassis`;
   static login = `${this.baseurl}/contact/login`;
   static logo = `${this.baseurl}/contact/upload-image`;
   static addBooking = `${this.baseurl}${this.commonapi}add/booking`;
   static register = `${this.baseurl}/register`;
+  static smsjobsheet = `${this.baseurl}/contact/check/phone/joborder`;
 }

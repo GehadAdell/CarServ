@@ -1,18 +1,46 @@
 <template>
   <div class="booking-container-selectcar">
     <h2 style="margin-bottom: 10px">{{ $t("bookingifonot") }}</h2>
+    <!-- Loading Indicator -->
+    <div v-if="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>{{ $t("loading") }}</p>
+    </div>
     <div>
       <div v-if="bookings.length > 0" class="joborder_info_div">
-        <p v-for="booking in bookings" :key="booking.id" class="joborder_info">
+        <a
+          v-for="booking in bookings"
+          :key="booking.id"
+          class="joborder_info"
+          @click="
+            dataOfJobInfo(
+              booking.booking_start,
+              booking.service,
+              booking.brand,
+              booking.model,
+              booking.plate_number,
+              booking.location,
+              booking.booking_note
+            )
+          "
+        >
           <span class="car-device" v-if="booking.job_sheet_no">
             {{ $t("jobsheetno") }}: {{ booking.job_sheet_no }}
           </span>
-
+          <span class="car-device">
+            {{ $t("model") }}: {{ booking.model }}
+          </span>
+          <span class="car-device">
+            {{ $t("brand") }}: {{ booking.brand }}
+          </span>
+          <span class="car-device">
+            {{ $t("platenumber") }}: {{ booking.plate_number }}
+          </span>
           <span class="car-device">
             {{ $t("Bookingstatus") }}: {{ booking.booking_status }}
             <hr />
           </span>
-        </p>
+        </a>
       </div>
 
       <div v-else>
@@ -32,11 +60,35 @@ export default {
       name: "",
       bookings: [],
       token: "",
+      isLoading: false,
     };
   },
   methods: {
+    dataOfJobInfo(
+      booking_start,
+      service,
+      brand,
+      model,
+      plate_number,
+      location,
+      booking_note
+    ) {
+      localStorage.setItem("Brand", brand);
+      localStorage.setItem("Model", model);
+      localStorage.setItem("Location", location);
+      localStorage.setItem("Service", service);
+      localStorage.setItem("Date", booking_start);
+      localStorage.setItem("Note", booking_note);
+      localStorage.setItem("plate_number", plate_number);
+      localStorage.setItem("location_id", "");
+      localStorage.setItem("device_id", "");
+      localStorage.setItem("service_id", "");
+      localStorage.setItem("isButtonDisabled", true);
+      this.$router.push("/details/booking");
+    },
     async fetchjoborder() {
       try {
+        this.isLoading = true;
         this.token = localStorage.getItem("authToken");
         if (!this.token) {
           throw new Error("Authentication required. Please log in.");
@@ -69,6 +121,8 @@ export default {
       } catch (error) {
         console.error("Error fetching job orders:", error);
         this.$emit("error", error.message || "Failed to load job orders");
+      } finally {
+        this.isLoading = false; // Reset loading state
       }
     },
   },

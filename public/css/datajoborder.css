@@ -115,7 +115,6 @@ th {
   font-size: clamp(16px, 5vw, 20px);
   /* Responsive font size */
   font-weight: bold;
-  text-align: right;
 }
 
 .countdown-container {

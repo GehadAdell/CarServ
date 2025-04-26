@@ -135,6 +135,7 @@ export default {
     this.device_id = localStorage.getItem("device_id");
     this.service_id = localStorage.getItem("service_id");
     this.plate_number = localStorage.getItem("plate_number");
+    this.isButtonDisabled = localStorage.getItem("isButtonDisabled");
   },
 };
 </script>

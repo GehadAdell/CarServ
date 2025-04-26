@@ -9,7 +9,7 @@
               <p class="jobsheet">
                 <span class="car-device">{{ $t("name") }}: {{ name }}</span>
                 <span class="car-device"
-                  >{{ $t("brand") }}: {{ joborder.brand }}</span
+                  >{{ $t("brand") }}: {{ joborder.catname }}</span
                 >
                 <span class="car-device"
                   >{{ $t("model") }}: {{ joborder.model }}</span
@@ -125,7 +125,7 @@
       </div>
       <hr />
       <div class="title-job">
-        <h3 id="finish" class="timeh">{{ $t("timeend") }}</h3>
+        <h3 id="finish">{{ $t("timeend") }}</h3>
       </div>
       <div class="countdown-container">
         <div class="countdown-box">
@@ -159,16 +159,17 @@ import axios from "axios";
 library.add(fas);
 
 export default {
+  name: "DataJobOrderSms",
   data() {
     return {
       name: "",
+      phone: "",
       jobId: "",
       statuses: [],
       datajoborders: [],
       dataproducts: [],
       status_id: "",
       selectedJobOrder: null,
-      token: "",
       days: 0,
       hours: 0,
       minutes: 0,
@@ -189,34 +190,23 @@ export default {
 
       try {
         this.isLoading = true;
-        this.token = localStorage.getItem("authToken");
-        console.log("Auth Token:", this.token);
-        if (!this.token) throw new Error("Authentication token not found.");
-
         const params = {
           job_order_id: this.jobId,
           product_ids: this.selectedProductIds,
         };
 
-        console.log("Sending GET request with params:", params);
-
-        const apiUrl = `${Endpoint.saveProduct}`;
-        const response = await axios.get(apiUrl, {
+        const apiUrl = `${Endpoint.saveProductwithoutauth}`;
+        await axios.get(apiUrl, {
           params,
           headers: {
-            Authorization: `Bearer ${this.token}`,
             "Content-Type": "application/json",
             Accept: "application/json",
           },
         });
 
-        console.log("Response:", response.data);
-
         this.$emit("success", "Products saved successfully!");
-        this.selectedProductIds = []; // Reset selected products
-        this.updateTotal(); // Update totals
-
-        // Refresh data without navigating
+        this.selectedProductIds = [];
+        this.updateTotal();
         await this.fetchdatajoborder();
       } catch (error) {
         console.error("Error saving product:", error);
@@ -229,67 +219,65 @@ export default {
     },
 
     getParts(plateNumber) {
-      const regex = /^([\p{L}\s]+)([\u0660-\u0669]+)$/u;
+      const regex = /^(\d+)([\p{L}\s]+)$/u;
       const match = plateNumber.match(regex);
-      return match ? [match[1], match[2]] : ["", ""];
+      return match ? [match[2].trim(), match[1]] : ["", ""];
     },
 
     async productname(orderid) {
       try {
-        this.token = localStorage.getItem("authToken");
-        const response = await fetch(`${Endpoint.productName}${orderid}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        });
+        const response = await fetch(
+          `${Endpoint.productNamewithoutauth}${orderid}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
         if (!response.ok)
           throw new Error(`Failed to fetch product: ${response.status}`);
         const data = await response.json();
-        return data.name; // Return the name directly
+        return data.name;
       } catch (error) {
         console.error("Error fetching product:", error);
         this.$emit("error", error.message || "Failed to load product");
-        return "Unknown Product"; // Fallback value
+        return "Unknown Product";
       }
     },
 
     async fetchdatajoborder() {
       try {
-        this.token = localStorage.getItem("authToken");
-        this.jobId = localStorage.getItem("jobId");
-        this.name = localStorage.getItem("name");
-        if (!this.token)
-          throw new Error("Authentication required. Please log in.");
+        this.jobId = localStorage.getItem("jobIdCheck") || "";
+        this.name = localStorage.getItem("name") || "Guest";
+        this.phone = localStorage.getItem("phone") || "";
 
-        const response = await fetch(`${Endpoint.datajoborder}${this.jobId}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        });
-        if (!response.ok)
-          throw new Error(`Failed to fetch joborder: ${response.status}`);
+        if (!this.jobId || !this.phone) {
+          throw new Error("Missing job ID or phone number.");
+        }
 
-        const data = await response.json();
+        const params = {
+          id: this.jobId,
+          phone: this.phone,
+        };
+        const apiUrl = Endpoint.smsjobsheet;
+        const response = await axios.get(apiUrl, { params });
+
+        const data = response.data;
         this.status_id = data.status_id;
         this.datajoborders = [data.dataofcar];
-        this.dataproducts = data.job_order; // Initial product data
+        this.dataproducts = data.job_order;
         this.days = data.days;
         this.hours = data.hours;
         this.minutes = data.minutes;
         this.seconds = data.seconds;
-        localStorage.setItem("status_id", data.status_id);
 
-        // Fetch product names for all products and add them to dataproducts
+        // Fetch product names
         await Promise.all(
           this.dataproducts.map(async (product) => {
             const productName = await this.productname(product.product_id);
-            product.name = productName; // Add the name to the product object
+            product.name = productName;
           })
         );
 
@@ -297,22 +285,27 @@ export default {
         this.startCountdown();
       } catch (error) {
         console.error("Error fetching job orders:", error);
+        console.log(this.phone);
+        console.log(this.jobId);
         this.$emit("error", error.message || "Failed to load job orders");
       }
     },
 
     async status() {
-      this.token = localStorage.getItem("authToken");
-      const response = await fetch(`${Endpoint.status}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      const data = await response.json();
-      this.statuses = data.status;
+      try {
+        const response = await fetch(`${Endpoint.statuswithoutauth}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+        const data = await response.json();
+        this.statuses = data.status;
+      } catch (error) {
+        console.error("Error fetching statuses:", error);
+        this.$emit("error", "Failed to load statuses");
+      }
     },
 
     updateTotal() {

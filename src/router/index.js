@@ -12,11 +12,16 @@ import Joborder from "../components/joborderInfo.vue";
 import notification from "../components/notificationInfo.vue";
 import dataJoborder from "../components/dataJobOrder.vue";
 import detailsbooking from "../components/detailsbooking.vue";
+import datajobordersms from "../components/datajobordersms.vue";
+// import checkphonesms from "../components/checkphonesms.vue";
 
 Vue.use(VueRouter);
 
 const isAuthenticated = () => {
   return localStorage.getItem("authToken") !== null;
+};
+const isAuthenticatedcheck = () => {
+  return localStorage.getItem("authcheck") !== null;
 };
 
 const routes = [
@@ -25,6 +30,16 @@ const routes = [
   { path: "/login", component: Login },
   { path: "/register", component: UserRegister },
   { path: "/user/register", component: mobileRegister },
+  {
+    path: "/data/job/order",
+    component: datajobordersms,
+    meta: { requiresAuthCheck: true },
+  },
+  {
+    path: "/check/phone/:id",
+    name: "checkphonesms",
+    component: () => import("@/components/checkphonesms.vue"),
+  },
   {
     path: "/add-car",
     component: AddCar,
@@ -71,6 +86,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !isAuthenticated()) {
     next("/");
+  } else if (to.meta.requiresAuthCheck && !isAuthenticatedcheck()) {
+    next("/check/phone/:id");
   } else {
     next();
   }

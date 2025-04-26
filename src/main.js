@@ -10,6 +10,8 @@ Vue.use(VueI18n);
 
 const messages = {
   en: {
+    lastdigit: "Please Enter Last 4 Digit From Your Phone",
+    last: "Enter last Digits",
     mobilereg: "Hello please complete Register",
     welcomeindex: "Maintenance reservation & reminders",
     buttonindex: "Sign In/Create account",
@@ -71,8 +73,11 @@ const messages = {
     fullname: "Full Name",
     entercode: "Enter Code",
     datareg: "We sent SMS with an activation code to your phone",
+    loading: "Loading",
   },
   ar: {
+    lastdigit: "من فضلك ادخل اخر 4 ارقام من هاتفك",
+    last: "ادخل الارقام",
     entercode: "ادخل الكود",
     datareg: "لقد أرسلنا لك رسالة نصية قصيرة تحتوي على رمز التفعيل إلى هاتفك",
     fullname: "الاسم",
@@ -134,6 +139,7 @@ const messages = {
     finish: "الانتهاء",
     welcome: "مرحبا",
     greeting: "مرحباً، {name}!",
+    loading: "يرجي الانتظار",
   },
 };
 

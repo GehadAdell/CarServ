@@ -46,7 +46,7 @@
     </div>
 
     <!-- Service Selection -->
-    <h3 style="text-align: left">{{ $t("servicechoose") }}</h3>
+    <h3>{{ $t("servicechoose") }}</h3>
     <div class="service-buttons-container">
       <div class="service-buttons">
         <button
@@ -62,7 +62,7 @@
     </div>
 
     <!-- Date and Time Picker -->
-    <h3 style="text-align: left">{{ $t("pickdate") }}</h3>
+    <h3>{{ $t("pickdate") }}</h3>
     <div class="form-group">
       <div class="date-inputs">
         <input
@@ -163,6 +163,10 @@ export default {
         const car = this.cars[this.currentCarIndex];
         this.brand = car.device;
         this.model = car.model;
+        localStorage.setItem("selectedCarId", car.id);
+        localStorage.setItem("selectedCarModel", car.model);
+        localStorage.setItem("selectedCarDevice", car.device);
+        localStorage.setItem("plate_number", car.plate_number);
         this.plate_number = car.plate_number;
       }
     },
@@ -264,6 +268,7 @@ export default {
         localStorage.setItem("location_id", this.car.branch);
         localStorage.setItem("device_id", this.carid);
         localStorage.setItem("service_id", this.selectedService);
+        localStorage.setItem("isButtonDisabled", false);
 
         this.$router.push("/details/booking");
 
@@ -294,6 +299,7 @@ export default {
     this.brand = localStorage.getItem("selectedCarDevice") || "";
     this.name = localStorage.getItem("name") || "";
     this.carid = localStorage.getItem("selectedCarId") || "";
+    this.plate_number = localStorage.getItem("plate_number") || "";
 
     this.fetchBranchs();
     this.fetchServices();

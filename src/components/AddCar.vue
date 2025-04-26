@@ -294,7 +294,7 @@ export default {
           localStorage.setItem("selectedCarId", "");
           localStorage.setItem("selectedCarModel", "");
           localStorage.setItem("selectedCarDevice", "");
-          this.$router.push("/booking");
+          this.$router.push("/choose-car");
         } else {
           throw new Error("Unexpected response from server");
         }

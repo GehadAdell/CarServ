@@ -25,8 +25,7 @@
     <div class="button-container">
       <button
         @click="login"
-        style="margin-left: -30px"
-        class="bg-black text-white px-6 py-4 rounded-xl font-bold shadow-md w-full max-w-[17.5rem]"
+        class="spacebtn bg-black text-white px-6 py-4 rounded-xl font-bold shadow-md w-full max-w-[17.5rem]"
       >
         {{ $t("loginbtn") }}
       </button>
