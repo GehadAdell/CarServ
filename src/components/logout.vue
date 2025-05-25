@@ -1,4 +1,3 @@
-<!-- components/logout.vue -->
 <template>
   <a v-if="isAuthenticated" @click="handleLogout" class="logout-btn"
     ><font-awesome-icon :icon="['fas', 'arrow-right-to-bracket']"
